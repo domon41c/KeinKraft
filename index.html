@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="uk">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   KeinKraft — Demo Tape
+  </title>
+  <style>
+   /* Atmospheric black metal direction and band gallery */
+#site {
+    background:radial-gradient(ellipse at 50% 8%,#222725 0%,#090b0a 38%,#030404 82%)}
+.logo {
+    filter:contrast(1.45);
+    text-shadow:0 0 2px #d2d2c8,0 0 24px #69766c44,4px 5px 0 #101211}
+.art {
+    width:min(100%,680px);
+    background-image:linear-gradient(0deg,#03040499,#03040422),url('hero.jpg');
+    background-size:cover;
+    background-position:center 38%;
+    box-shadow:inset 0 0 60px #000,0 0 35px #141a17}
+.language-switch {
+    display:flex;
+    gap:6px;
+    align-items:center}
+.language-switch button {
+    border:1px solid #51433f;
+    background:#0c0b0b;
+    color:#aaa;
+    padding:7px 10px;
+    font:10px Georgia,serif;
+    cursor:pointer}
+.language-switch button[aria-pressed=true] {
+    color:#fff;
+    border-color:#a42a30;
+    background:#190d0e}
+.art:before {
+    background:linear-gradient(0deg,#030404aa 0%,transparent 70%)}
+.moon,.spire {
+    display:none}
+.art:before {
+    background:repeating-linear-gradient(118deg,transparent 0 22px,#ffffff05 23px 24px),radial-gradient(ellipse at 50% 55%,#89988a22,transparent 58%),linear-gradient(0deg,#030404 0%,transparent 75%)}
+.moon {
+    box-shadow:0 0 55px #b8c0bb22;
+    opacity:.72}
+.spire {
+    width:76%;
+    height:76%;
+    clip-path:polygon(0 100%,4% 67%,12% 71%,18% 48%,22% 57%,28% 19%,32% 53%,41% 29%,45% 0,49% 40%,55% 23%,60% 57%,66% 39%,72% 63%,78% 31%,84% 59%,91% 51%,100% 100%)}
+.members {
+    max-width:1000px}
+.member-intro {
+    color:#9c9690;
+    font-size:13px;
+    line-height:1.8;
+    margin:-8px 0 25px;
+    max-width:620px}
+.member-grid {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px}
+.member-card {
+    min-width:0;
+    background:linear-gradient(180deg,#111414,#080909);
+    border:1px solid #353a37;
+    overflow:hidden}
+.member-portrait {
+    height:220px;
+    position:relative;
+    display:grid;
+    place-items:center;
+    overflow:hidden;
+    background:radial-gradient(ellipse at 50% 34%,#39403d 0,#151817 35%,#070808 76%)}
+.member-photo {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:grayscale(1) contrast(1.08);
+    z-index:1}
+.member-portrait.has-photo .portrait-shape,.member-portrait.has-photo .portrait-symbol {
+    display:none}
+.member-portrait:before {
+    content:'';
+    position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(0deg,transparent 0 4px,#fff 5px,#fff 6px);
+    opacity:.025}
+.member-portrait:after {
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(0deg,#080909 0%,transparent 48%,#0005 100%)}
+.portrait-shape {
+    width:96px;
+    height:138px;
+    position:relative;
+    z-index:1;
+    background:linear-gradient(90deg,#080909,#292d2a 48%,#080909);
+    clip-path:polygon(31% 0,69% 0,83% 12%,76% 35%,100% 100%,0 100%,24% 35%,17% 12%)}
+.portrait-symbol {
+    position:absolute;
+    z-index:2;
+    top:22px;
+    color:#9da49b;
+    font-size:32px;
+    text-shadow:0 0 20px #bfc8bf55}
+.member-card:nth-child(2) .member-portrait {
+    background:radial-gradient(ellipse at 50% 35%,#39352f,#11100f 44%,#060606 80%)}
+.member-card:nth-child(3) .member-portrait {
+    background:radial-gradient(ellipse at 50% 35%,#343b3c,#111415 44%,#060707 80%)}
+.member-info {
+    padding:18px 18px 20px;
+    border-top:1px solid #333936}
+.member-role {
+    font-size:9px;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:#a5aaa2}
+.member-name {
+    font-size:22px;
+    line-height:1.2;
+    margin:9px 0 12px;
+    font-family:'Old English Text MT',fantasy,Georgia,serif;
+    font-weight:normal}
+.member-bio {
+    font-size:12px;
+    line-height:1.8;
+    color:#a29f99;
+    margin:0}
+.sigil-small {
+    color:#8e292d;
+    margin-top:15px;
+    font-size:12px}
+@media(max-width:650px) {
+    .member-grid {
+    grid-template-columns:1fr;
+    max-width:420px;
+    margin:auto}
+.member-portrait {
+    height:260px}
+}
+:root {
+    color-scheme:light dark;
+    --bg:#090909;
+    --panel:#111;
+    --ink:#e8e4df;
+    --muted:#99918b;
+    --line:#39332f;
+    --red:#8d171b}
+* {
+    box-sizing:border-box}
+html {
+    scroll-behavior:smooth}
+body {
+    margin:0;
+    background:#090909;
+    color:var(--ink);
+    font-family:Georgia,'Times New Roman',serif}
+#site {
+    min-height:100vh;
+    background:radial-gradient(ellipse at 50% 0%,#292020 0%,#0a0909 42%,#050505 100%);
+    border-radius:0;
+    overflow:hidden}
+.grain {
+    pointer-events:none;
+    position:fixed;
+    inset:0;
+    opacity:.06;
+    z-index:5;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E")}
+.topbar {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:24px 6vw;
+    border-bottom:1px solid #302a27;
+    text-transform:uppercase;
+    letter-spacing:.18em;
+    font-size:11px}
+.topbar a,.social a {
+    color:var(--ink);
+    text-decoration:none}
+.topbar a:hover,.social a:hover {
+    color:#c23a3f}
+.sigil {
+    color:#a92b30;
+    font-size:19px}
+.hero {
+    max-width:1100px;
+    margin:auto;
+    padding:64px 24px 54px;
+    text-align:center}
+.eyebrow {
+    font-size:11px;
+    letter-spacing:.42em;
+    color:#b5aaa3;
+    text-transform:uppercase}
+.logo {
+    font-family:'Old English Text MT','UnifrakturCook',fantasy,Georgia,serif;
+    font-weight:900;
+    font-size:clamp(50px,12vw,130px);
+    letter-spacing:-.055em;
+    line-height:.98;
+    margin:23px 0 14px;
+    text-shadow:0 0 25px #72161b66,3px 4px 0 #1b1010}
+.subtitle {
+    font-size:12px;
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    color:#a39a94}
+.art {
+    position:relative;
+    margin:42px auto 30px;
+    width:min(100%,580px);
+    aspect-ratio:1.45;
+    background:linear-gradient(180deg,#151515,#050505);
+    border:1px solid #3b3330;
+    overflow:hidden;
+    display:grid;
+    place-items:center}
+.art:before {
+    content:'';
+    position:absolute;
+    inset:0;
+    background:repeating-linear-gradient(118deg,transparent 0 22px,#ffffff05 23px 24px),radial-gradient(ellipse at 50% 55%,#5b252533,transparent 58%)}
+.moon {
+    position:absolute;
+    width:34%;
+    aspect-ratio:1;
+    border-radius:50%;
+    top:12%;
+    left:33%;
+    background:radial-gradient(circle at 38% 35%,#b9b2a8,#615b57 45%,#211e1d 72%,transparent 74%);
+    opacity:.8;
+    filter:grayscale(1)}
+.spire {
+    position:absolute;
+    bottom:-3%;
+    left:50%;
+    transform:translateX(-50%);
+    width:70%;
+    height:67%;
+    background:#080808;
+    clip-path:polygon(0 100%,9% 58%,16% 66%,25% 24%,31% 52%,43% 4%,48% 41%,55% 28%,62% 60%,70% 38%,77% 67%,88% 53%,100% 100%);
+    filter:drop-shadow(0 0 10px #000)}
+.art-label {
+    position:absolute;
+    bottom:8%;
+    left:0;
+    right:0;
+    letter-spacing:.5em;
+    font-size:clamp(12px,2vw,18px);
+    text-shadow:0 2px 8px #000}
+.intro {
+    max-width:560px;
+    margin:0 auto;
+    color:#b7aea8;
+    line-height:1.8;
+    font-size:15px}
+.social {
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:30px}
+.social a,.outline,.upload-label {
+    border:1px solid #51433f;
+    padding:12px 17px;
+    font-size:10px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    background:#0c0b0b;
+    transition:.2s}
+.social a:hover,.outline:hover,.upload-label:hover {
+    border-color:#a42a30;
+    background:#190d0e}
+.section {
+    max-width:900px;
+    margin:0 auto;
+    padding:45px 24px 60px}
+.section-head {
+    display:flex;
+    align-items:center;
+    gap:16px;
+    margin-bottom:22px}
+.section-head h2 {
+    font-size:23px;
+    font-weight:400;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    margin:0}
+.section-head:after {
+    content:'';
+    height:1px;
+    background:#3b3330;
+    flex:1}
+.player {
+    border:1px solid #3a302e;
+    background:linear-gradient(135deg,#141111,#090909);
+    padding:24px}
+.now {
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:22px}
+.cover-mini {
+    width:66px;
+    height:66px;
+    flex-shrink:0;
+    border:1px solid #55423f;
+    background:radial-gradient(circle at 50% 35%,#5b5550 0 13%,#171414 14% 28%,#090909 29%);
+    display:grid;
+    place-items:center;
+    font-size:25px;
+    color:#a72b30}
+.track-meta {
+    min-width:0;
+    flex:1}
+.track-meta strong {
+    display:block;
+    font-size:17px;
+    font-weight:400;
+    letter-spacing:.06em}
+.track-meta span {
+    display:block;
+    color:var(--muted);
+    font:11px Arial,sans-serif;
+    margin-top:7px}
+.controls {
+    display:flex;
+    align-items:center;
+    gap:13px;
+    margin-bottom:17px}
+.play {
+    width:43px;
+    height:43px;
+    border:1px solid #8c2429;
+    color:#eee;
+    background:#240e10;
+    font-size:17px;
+    cursor:pointer}
+.time {
+    font:11px Arial,sans-serif;
+    color:#a9a09a;
+    white-space:nowrap}
+.range {
+    width:100%;
+    accent-color:#a72b30;
+    cursor:pointer}
+.track-list {
+    list-style:none;
+    margin:0;
+    padding:0;
+    border-top:1px solid #302725}
+.track {
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 5px;
+    border-bottom:1px solid #302725}
+.track button {
+    background:none;
+    border:0;
+    color:#ddd;
+    cursor:pointer;
+    font:12px Georgia,serif;
+    text-align:left}
+.track .num {
+    font:11px Arial,sans-serif;
+    color:#766c67;
+    width:22px}
+.track .name {
+    flex:1}
+.track .duration {
+    font:11px Arial,sans-serif;
+    color:#827873}
+.track.active .name {
+    color:#c74a4e}
+.download {
+    color:#a69b95!important;
+    font-size:16px!important;
+    text-decoration:none;
+    padding:4px 8px}
+.download:hover {
+    color:#fff!important}
+.upload-row {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:20px}
+.hint {
+    color:#8f8580;
+    font:12px/1.6 Arial,sans-serif;
+    max-width:430px}
+.upload-label {
+    display:inline-block;
+    cursor:pointer;
+    color:#eee}
+input[type=file] {
+    display:none}
+.footer {
+    text-align:center;
+    border-top:1px solid #302a27;
+    padding:30px 15px 40px;
+    color:#6f6661;
+    font-size:10px;
+    letter-spacing:.2em;
+    text-transform:uppercase}
+.footer b {
+    color:#a12c31;
+    font-weight:400}
+@media(max-width:560px) {
+    .topbar {
+    padding:18px 5vw}
+.hero {
+    padding-top:42px}
+.player {
+    padding:16px}
+.section {
+    padding-left:16px;
+    padding-right:16px}
+.upload-row {
+    align-items:flex-start}
+.now {
+    gap:12px}
+.track {
+    gap:7px}
+}
+/* Keep the banner photo after the base .art background shorthand */
+.art {
+    background-image:linear-gradient(0deg,#03040499,#03040422),url("./hero.jpg") !important;
+    background-size:cover;
+    background-position:center 38%}
+.art:before {
+    background:linear-gradient(0deg,#030404aa 0%,transparent 70%)}
+</style>
+ </head>
+ <body>
+  <main id="site">
+   <div class="grain">
+   </div>
+   <nav class="topbar">
+    <span class="sigil">
+     ✠
+    </span>
+    <a data-i18n="demo" href="#music">
+     Демо / I
+    </a>
+    <a data-i18n="band" href="#members">
+     Учасники
+    </a>
+    <a data-i18n="follow" href="#contact">
+     Соцмережі
+    </a>
+    <div class="language-switch">
+     <button aria-pressed="true" data-lang="uk" type="button">
+      UA
+     </button>
+     <button aria-pressed="false" data-lang="de" type="button">
+      DE
+     </button>
+    </div>
+   </nav>
+   <header class="hero">
+    <div class="eyebrow" data-i18n="eyebrow">
+     Український атмосферний Black Metal · Demo 1
+    </div>
+    <h1 class="logo">
+     KeinKraft
+    </h1>
+    <div class="subtitle" data-i18n="subtitle">
+     Березнегувате сталіца міра
+    </div>
+    <div aria-label="Atmospheric monochrome album artwork" class="art">
+     <div class="moon">
+     </div>
+     <div class="spire">
+     </div>
+     <div class="art-label">
+      DEMO TAPE · MMXXVI
+     </div>
+    </div>
+    <p class="intro" data-i18n="intro">
+     Атмосферний Black Metal з України. бля а шо так можна було.
+    </p>
+    <div class="social" id="contact">
+     <a href="https://t.me/misanthropCave" rel="noreferrer" target="_blank">
+      Telegram ↗
+     </a>
+     <a href="https://tiktok.com/@domon41_c" rel="noreferrer" target="_blank">
+      TikTok ↗
+     </a>
+     <a href="https://www.instagram.com/domon41c" rel="noreferrer" target="_blank">
+      Instagram ↗
+     </a>
+     
+    </div>
+   </header>
+   <section class="section" id="music">
+    <div class="section-head">
+     <h2 data-i18n="listen">
+      Слухати демо
+     </h2>
+    </div>
+    <div class="player">
+     <div class="now">
+      <div class="cover-mini">
+       ✠
+      </div>
+      <div class="track-meta">
+       <strong id="nowTitle">
+        Select a track
+       </strong>
+       <span id="nowSub">
+        KeinKraft · DEMO TAPE
+       </span>
+      </div>
+     </div>
+     <audio id="audio" preload="metadata">
+     </audio>
+     <div class="controls">
+      <button aria-label="Play or pause" class="play" id="play">
+       ▶
+      </button>
+      <span class="time" id="elapsed">
+       0:00
+      </span>
+      <input aria-label="Track progress" class="range" id="seek" max="100" min="0" type="range" value="0"/>
+      <span class="time" id="duration">
+       0:00
+      </span>
+     </div>
+     <ul class="track-list" id="tracks">
+      <li class="track">
+       <span class="num">
+        01
+       </span>
+       <button class="name" data-empty="true" type="button">
+        Track I — The Blackened Dawn
+       </button>
+       <span class="duration">
+        —:—
+       </span>
+      </li>
+      <li class="track">
+       <span class="num">
+        02
+       </span>
+       <button class="name" data-empty="true" type="button">
+        Track II — Ashes of the Sun
+       </button>
+       <span class="duration">
+        —:—
+       </span>
+      </li>
+      <li class="track">
+       <span class="num">
+        03
+       </span>
+       <button class="name" data-empty="true" type="button">
+        Track III — Nocturnal Rite
+       </button>
+       <span class="duration">
+        —:—
+       </span>
+      </li>
+      <li class="track">
+        <span class="num">
+         04
+        </span>
+        <button class="name" data-empty="true" type="button">
+         Track III — Nocturnal Rite
+        </button>
+        <span class="duration">
+         —:—
+        </span>
+       </li>
+       <li class="track">
+        <span class="num">
+         05
+        </span>
+        <button class="name" data-empty="true" type="button">
+         Track III — Nocturnal Rite
+        </button>
+        <span class="duration">
+         —:—
+        </span>
+       </li>
+     </ul>
+     <div class="upload-row">
+      
+      <input accept="audio/*,.mp3,.wav,.ogg,.flac,.m4a" id="files" multiple="" type="file"/>
+     </div>
+    </div>
+   </section>
+   <section class="section members" id="members">
+    <div class="section-head">
+     <h2 data-i18n="members">
+      Ті, хто залишився
+     </h2>
+    </div>
+    <p class="member-intro" data-i18n="memberIntro">
+     Три уйобка які розїбуть цю сцену.
+    </p>
+    <div class="member-grid">
+     <article class="member-card">
+      <div class="member-portrait">
+       <img alt="" class="member-photo" onerror="this.remove()" onload="this.parentElement.classList.add('has-photo')" src="member1.jpg"/>
+       <span class="portrait-symbol">
+        ✠
+       </span>
+       <div class="portrait-shape">
+       </div>
+      </div>
+      <div class="member-info">
+       <div class="member-role">
+        Вокал
+       </div>
+       <h3 class="member-name">
+        Владислав
+       </h3>
+       <p class="member-bio">
+        Селюк який пока шо не вибрався з села...
+       </p>
+       <div class="sigil-small">
+        ✧   01 / Голос Країни
+       </div>
+      </div>
+     </article>
+     <article class="member-card">
+      <div class="member-portrait">
+       <img alt="" class="member-photo" onerror="this.remove()" onload="this.parentElement.classList.add('has-photo')" src="member2.jpg"/>
+       <span class="portrait-symbol">
+        ☽
+       </span>
+       <div class="portrait-shape">
+       </div>
+      </div>
+      <div class="member-info">
+       <div class="member-role">
+        Гітари · Клавіши
+       </div>
+       <h3 class="member-name">
+        Дмитро
+       </h3>
+       <p class="member-bio">
+        Селюк який всьо таки вибрався з села.
+       </p>
+       <div class="sigil-small">
+        ✧   02 / Гітарка бриньк
+       </div>
+      </div>
+     </article>
+     <article class="member-card">
+      <div class="member-portrait">
+       <img alt="" class="member-photo" onerror="this.remove()" onload="this.parentElement.classList.add('has-photo')" src="member3.jpg"/>
+       <span class="portrait-symbol">
+        ⛧
+       </span>
+       <div class="portrait-shape">
+       </div>
+      </div>
+      <div class="member-info">
+       <div class="member-role">
+        Бас · Харізма нахуй
+       </div>
+       <h3 class="member-name">
+        Серафім
+       </h3>
+       <p class="member-bio">
+        Ну це про Сіма, шо сказать.
+       </p>
+       <div class="sigil-small">
+        ✧   03 / Да
+       </div>
+      </div>
+     </article>
+    </div>
+   </section>
+   <footer class="footer">
+    <span data-i18n="footer">
+     KeinKraft
+    </span>
+    <b>
+     ✠
+    </b>
+    <span data-i18n="footerTag">
+     Незалежний / Андеграунд / Непокірний
+    </span>
+   </footer>
+  </main>
+  <script>
+const words= {
+    uk: {
+        demo:'Демо / I',band:'Учасники',follow:'Соцмережі',eyebrow:'Український атмосферний Black Metal · Demo 1',subtitle:'Березнегувате сталіца міра',intro:'Атмосферний Black Metal з України. бля а шо так можна було.',listen:'Слухати демо',uploadHint:'Додай MP3, WAV або OGG-файли. Вони залишаються у твоєму браузері.',addFiles:'＋ Додати аудіофайли',footer:'KeinKraft',footerTag:'Незалежний / Андеграунд / Непокірний',members:'Ті, хто залишився',memberIntro:'Три уйобка які розїбуть цю сцену.',roles:['Вокал','Гітари · Клавіши','Барабани · Харізма нахуй'],names:['Вокаліст','Гітарист','Басіст'],bios:['Селюк який поки не вибрався з села...','Селюк який вибрався з села.','Просто сіма.']
+    },
+    de: {
+        demo:'Demo / I',band:'Die Band',follow:'Social Media',eyebrow:'Ukrainischer Atmospheric Black Metal · Demo 1',subtitle:'Musik aus der Ukraine',intro:'Atmospheric Black Metal aus der Ukraine. Glück und Dunkelheit',listen:'Demo anhören',uploadHint:'Füge MP3-, WAV- oder OGG-Dateien hinzu. Sie bleiben in deinem Browser.',addFiles:'＋ Audiodateien hinzufügen',footer:'KeinKraft',footerTag:'Unabhängig / Underground / Unbeugsam',members:'Die Verbliebenen',memberIntro:'Drei Silhouetten unter einem sterbenden Himmel.',roles:['Gesang','Gitarren · klavier','Bass · Atmosphäre'],names:['Sänger','Gitarrist','Bass'],bios:['Ein Hinterwäldler, der es nie aus dem Dorf herausgeschafft hat.','Ein Landei, das es aus dem Dorf geschafft hat.','Einfach Sima']
+    }
+};
+function setLanguage(lang) {
+    document.documentElement.lang=lang;
+    document.querySelectorAll('[data-lang]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.lang===lang)));
+    document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.dataset.i18n;if(words[lang][k])el.textContent=words[lang][k]});
+    const s=document.getElementById('members');
+    if(s) {
+        s.querySelectorAll('.member-card').forEach((c,i)=>{c.querySelector('.member-role').textContent=words[lang].roles[i];c.querySelector('.member-name').textContent=words[lang].names[i];c.querySelector('.member-bio').textContent=words[lang].bios[i]})
+    }
+}
+document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>setLanguage(b.dataset.lang)));
+const audio=document.getElementById('audio'),play=document.getElementById('play'),seek=document.getElementById('seek'),elapsed=document.getElementById('elapsed'),duration=document.getElementById('duration'),nowTitle=document.getElementById('nowTitle'),nowSub=document.getElementById('nowSub'),list=document.getElementById('tracks'),files=document.getElementById('files');
+let tracks=[ {
+    name:'Intro',url:'audio/Intro.mp3',duration:133.413
+},  
+{
+    name:'Project 23',url:'audio/project-23.mp3',duration:212.571
+},
+{
+    name:'Piano',url:'audio/piano.mp3',duration:223.413
+},
+{
+    name:'Für glück',url:'audio/fur-gluck.mp3',duration:222.048
+},
+{
+    name:'Huynja',url:'audio/Huynja.mp3',duration:96.048
+},
+{
+    name:'Project 31',url:'audio/Project_31.mp3',duration:45.048
+},
+{
+    name:'DSBM7',url:'audio/DSBM7.mp3',duration:163.048
+},
+{
+    name:'Piano outro',url:'audio/Piano_rozjob.mp3',duration:128.048
+}]
+,current=-1;
+function stamp(s) {
+    if(!Number.isFinite(s))return '0:00';
+    return Math.floor(s/60)+':'+String(Math.floor(s%60)).padStart(2,'0')
+}
+function render() {
+    list.innerHTML='';
+    tracks.forEach((t,i)=>{const li=document.createElement('li');li.className='track'+(i===current?' active':'');const n=document.createElement('span');n.className='num';n.textContent=String(i+1).padStart(2,'0');const b=document.createElement('button');b.className='name';b.type='button';b.textContent=t.name;b.onclick=()=>loadTrack(i,true);const d=document.createElement('span');d.className='duration';d.textContent=stamp(t.duration);const a=document.createElement('a');a.className='download';a.href=t.url;a.download=t.name;a.textContent='↓';a.title='Download '+t.name;a.setAttribute('aria-label','Download '+t.name);li.append(n,b,d,a);list.append(li)})
+}
+function loadTrack(i,autoplay) {
+    if(!tracks[i])return;
+    current=i;
+    audio.src=tracks[i].url;
+    nowTitle.textContent=tracks[i].name;
+    nowSub.textContent='KeinKraft · DEMO TAPE';
+    seek.value=0;
+    elapsed.textContent='0:00';
+    render();
+    if(autoplay)audio.play().then(()=>play.textContent='Ⅱ').catch(()=>play.textContent='▶')
+}
+files.addEventListener('change',()=>{for(const f of files.files){const url=URL.createObjectURL(f);tracks.push({name:f.name.replace(/\.[^.]+$/,''),url,duration:0});const index=tracks.length-1;const probe=new Audio();probe.src=url;probe.addEventListener('loadedmetadata',()=>{tracks[index].duration=probe.duration;render()},{once:true})}render();if(current<0&&tracks.length)loadTrack(0,false);files.value=''});
+play.addEventListener('click',()=>{if(current<0){if(tracks.length)loadTrack(0,true);return}if(audio.paused)audio.play().then(()=>play.textContent='Ⅱ').catch(()=>{});else audio.pause()});
+audio.addEventListener('play',()=>play.textContent='Ⅱ');
+audio.addEventListener('pause',()=>play.textContent='▶');
+audio.addEventListener('timeupdate',()=>{elapsed.textContent=stamp(audio.currentTime);if(Number.isFinite(audio.duration)&&audio.duration){seek.value=audio.currentTime/audio.duration*100;duration.textContent=stamp(audio.duration)}});
+audio.addEventListener('loadedmetadata',()=>duration.textContent=stamp(audio.duration));
+audio.addEventListener('error',()=>{nowSub.textContent='Не вдалося завантажити аудіо — перевір папку audio/';play.textContent='▶'});
+seek.addEventListener('input',()=>{if(audio.duration)audio.currentTime=Number(seek.value)/100*audio.duration});
+audio.addEventListener('ended',()=>{if(current>=0&&current<tracks.length-1)loadTrack(current+1,true)});
+render();
+loadTrack(0,false);
+</script>
+ </body>
+</html>
